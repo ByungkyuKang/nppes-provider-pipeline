@@ -1,8 +1,8 @@
-"""4단계: Load — 정제된 데이터를 DuckDB에 적재한다.
+"""Step 4: Load — load the cleaned data into DuckDB.
 
-멱등성(idempotent): 같은 데이터를 두 번 넣어도 결과가 달라지지 않게 만든다.
-매일 실행되는 파이프라인의 기본기다.
-(Day 4에서 구현)
+Idempotent: loading the same data twice does not change the result.
+A fundamental practice for daily pipelines.
+(To be implemented on Day 4)
 """
 import os
 
@@ -10,4 +10,4 @@ DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "processed", "pr
 
 
 def load(df, db_path: str = DB_PATH) -> None:
-    raise NotImplementedError("Day 4에서 구현 예정")
+    raise NotImplementedError("To be implemented on Day 4")

@@ -1,48 +1,48 @@
 # nppes-provider-pipeline
 
-헬스케어 provider(의료 제공자) 라이선스 데이터의 end-to-end 데이터 파이프라인.
-CMS NPPES 공개 데이터를 수집 → 정제 → 품질 검증 → 적재 → 일간 스케줄링한다.
+An end-to-end data pipeline for healthcare provider license data.
+Ingests CMS NPPES public data → cleans → validates quality → loads → runs on a daily schedule.
 
-## 파이프라인 흐름
+## Pipeline Flow
 
 ```
-NPPES 공개 데이터 (CSV)
+NPPES public data (CSV)
         │
         ▼
-  1. Ingest (src/ingest.py)      — 데이터 다운로드 및 raw 저장
+  1. Ingest (src/ingest.py)      — download data, store raw
         │
         ▼
-  2. Transform (src/transform.py) — pandas 정제: 중복 제거, 만료일 계산, 상태 정규화
+  2. Transform (src/transform.py) — clean with pandas: dedupe, expiry calc, status normalize
         │
         ▼
-  3. Validate (src/validate.py)   — 품질 규칙 검사: 필수값 누락, 만료 라이선스 탐지
+  3. Validate (src/validate.py)   — quality rules: missing values, expired licenses
         │
         ▼
-  4. Load (src/load.py)           — DuckDB 적재 (멱등성 보장)
+  4. Load (src/load.py)           — load into DuckDB (idempotent)
         │
         ▼
-  5. Schedule                     — cron → Airflow DAG 일간 실행 (W2~W3)
+  5. Schedule                     — cron → Airflow DAG, daily (W2–W3)
 ```
 
-## 실행 방법
+## Getting Started
 
 ```bash
-# 1. 가상환경 생성 및 활성화
+# 1. Create and activate a virtual environment
 python -m venv venv
 source venv/bin/activate      # Windows: venv\Scripts\activate
 
-# 2. 의존성 설치
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. 파이프라인 실행
+# 3. Run the pipeline
 python -m src.main
 ```
 
-## 기술 스택
+## Tech Stack
 
-Python, pandas, DuckDB, (예정: cron → Airflow, Docker, PySpark)
+Python, pandas, DuckDB (planned: cron → Airflow, Docker, PySpark)
 
-## 데이터
+## Data
 
-CMS NPPES (National Plan & Provider Enumeration System) 공개 데이터.
-전체 월간 파일이 4GB를 넘으므로, 실습용으로는 주간 증분 파일 또는 특정 주(state) 샘플을 사용한다.
+CMS NPPES (National Plan & Provider Enumeration System) public data.
+The full monthly file exceeds 4GB, so this project uses the weekly incremental file or a single-state sample.

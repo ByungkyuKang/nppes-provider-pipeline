@@ -1,1 +1,1 @@
-# src 패키지 표시용 빈 파일
+# Marks src as a Python package

@@ -1,4 +1,4 @@
-"""파이프라인 진입점: ingest → transform → validate → load 순서로 실행한다."""
+"""Pipeline entry point: runs ingest → transform → validate → load in order."""
 from .ingest import download_nppes, load_raw
 from .transform import transform
 from .validate import run_checks
@@ -11,10 +11,10 @@ def main() -> None:
     df = transform(df)
 
     report = run_checks(df)
-    print("데이터 품질 리포트:", report)
+    print("Data quality report:", report)
 
     load(df)
-    print("파이프라인 완료")
+    print("Pipeline complete")
 
 
 if __name__ == "__main__":

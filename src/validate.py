@@ -1,15 +1,15 @@
-"""3단계: Validate — 품질 규칙으로 데이터를 검사한다.
+"""Step 3: Validate — check the data against quality rules.
 
-규칙 예시:
-1. NPI(식별자) 중복 금지
-2. 필수 필드 (이름, 주) 누락 금지
-3. 만료된 라이선스 플래그 확인
-4. 우편번호 형식 검사
-5. 비정상 레코드 리포트 출력
-(Day 5에서 구현 — 네가 실무에서 하던 품질 모니터링의 Python 버전)
+Example rules:
+1. No duplicate NPIs (identifiers)
+2. No missing required fields (name, state)
+3. Flag expired licenses
+4. Validate ZIP code format
+5. Report anomalous records
+(To be implemented on Day 5 — the Python version of production data-quality monitoring)
 """
 
 
 def run_checks(df) -> dict:
-    """각 규칙을 실행하고 {규칙명: 실패 건수} 를 반환한다."""
-    raise NotImplementedError("Day 5에서 구현 예정")
+    """Run each rule and return {rule_name: failure_count}."""
+    raise NotImplementedError("To be implemented on Day 5")
