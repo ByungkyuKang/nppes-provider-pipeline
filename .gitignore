@@ -1,0 +1,23 @@
+# Virtual environments (local only, never commit)
+venv/
+.venv/
+
+# Data (large files excluded from git; download instructions in README)
+data/raw/
+data/processed/
+*.csv
+*.parquet
+*.duckdb
+
+# Environment variables (may contain secrets)
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pytest_cache/
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/
