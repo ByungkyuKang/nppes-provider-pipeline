@@ -1,0 +1,10 @@
+# Core
+pandas>=2.0
+duckdb>=0.9
+
+# Utilities
+requests>=2.31      # for downloading NPPES files
+python-dotenv>=1.0  # environment variable management (.env)
+
+# Testing
+pytest>=7.0
