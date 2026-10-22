@@ -1,11 +1,22 @@
-"""Step 2: Transform — clean the data with pandas.
+"""Step 2: Transform — clean the data with pandas."""
 
-- Deduplicate NPIs
-- Compute license expiry (expired flag)
-- Normalize provider status values (case/whitespace cleanup, etc.)
-(To be implemented on Day 3)
-"""
+CODE_COLUMNS = [
+    "Entity Type Code",
+    "Provider Sex Code",
+    "Is Sole Proprietor",
+    "Is Organization Subpart",
+]
 
 
 def transform(df):
-    raise NotImplementedError("To be implemented on Day 3")
+    df = df.drop_duplicates(subset=["NPI"], keep="first")
+
+    for col in CODE_COLUMNS:
+        df[col] = df[col].str.strip().str.upper()
+
+    df["is_deactivated"] = (
+        df["NPI Deactivation Date"].notna()
+        & df["NPI Reactivation Date"].isna()
+    )
+
+    return df
