@@ -1,15 +1,17 @@
-"""Step 3: Validate — check the data against quality rules.
+"""Validate — data quality checks on the cleaned data.
 
-Example rules:
-1. No duplicate NPIs (identifiers)
-2. No missing required fields (name, state)
-3. Flag expired licenses
-4. Validate ZIP code format
-5. Report anomalous records
-(To be implemented on Day 5 — the Python version of production data-quality monitoring)
+Returns a report dict with counts of bad rows.
+main.py prints this report before loading.
 """
 
 
 def run_checks(df) -> dict:
-    """Run each rule and return {rule_name: failure_count}."""
-    raise NotImplementedError("To be implemented on Day 5")
+    entity = df["Entity Type Code"]
+    invalid_entity = entity.notna() & ~entity.isin(["1", "2"])
+    return {
+        "row_count": int(len(df)),
+        "null_npi_count": int(df["NPI"].isna().sum()),
+        "duplicate_npi_count": int(df.duplicated(subset=["NPI"]).sum()),
+        "invalid_entity_type_count": int(invalid_entity.sum()),
+        "deactivated_count": int(df["is_deactivated"].sum()) if "is_deactivated" in df.columns else 0,
+    }
