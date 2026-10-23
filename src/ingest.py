@@ -14,15 +14,21 @@ def download_nppes(url=DEFAULT_URL):
     zip_path = os.path.join(RAW_DIR, os.path.basename(url))
 
     if not os.path.exists(zip_path):
-        response = requests.get(url)
-        response.raise_for_status()
-        with open(zip_path, "wb") as f:
-            f.write(response.content)
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            with open(zip_path, "wb") as f:
+                f.write(response.content)
+        except requests.exceptions.RequestException:
+            local_path = find_latest_csv()
+            print(f"Warning: download failed, using local file: {local_path}")
+            return local_path
 
     with zipfile.ZipFile(zip_path) as zf:
         zf.extractall(RAW_DIR)
 
     return find_latest_csv()
+
 
 
 def find_latest_csv():
